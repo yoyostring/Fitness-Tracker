@@ -143,6 +143,20 @@ export default function QuickActions() {
                             <label htmlFor="calories">Calories</label>
                             <input type="number" id="calories" name="calories" placeholder="650" required />
                           </div>
+                          <div className="form-row-3">
+                            <div className="form-group">
+                              <label htmlFor="protein">Protein (g)</label>
+                              <input type="number" id="protein" name="protein" step="0.1" placeholder="0" />
+                            </div>
+                            <div className="form-group">
+                              <label htmlFor="carbs">Carbs (g)</label>
+                              <input type="number" id="carbs" name="carbs" step="0.1" placeholder="0" />
+                            </div>
+                            <div className="form-group">
+                              <label htmlFor="fat">Fat (g)</label>
+                              <input type="number" id="fat" name="fat" step="0.1" placeholder="0" />
+                            </div>
+                          </div>
                           <button type="submit" className="log-workout-btn">Add Entry</button>
                         </form>
                       </div>
@@ -193,6 +207,9 @@ export default function QuickActions() {
 
         const foodName = formData.get('food');
         const calories = formData.get('calories');
+        const protein = formData.get('protein');
+        const carbs = formData.get('carbs');
+        const fat = formData.get('fat');
 
         if (!foodName || !calories) {
           alert('Please fill in all required fields');
@@ -204,7 +221,10 @@ export default function QuickActions() {
           .insert({
             user_id: user.id,
             food_name: foodName,
-            calories: parseInt(calories)
+            calories: parseInt(calories),
+            protein: protein ? parseFloat(protein) : 0,
+            carbs: carbs ? parseFloat(carbs) : 0,
+            fat: fat ? parseFloat(fat) : 0
           });
     
         if (error) {

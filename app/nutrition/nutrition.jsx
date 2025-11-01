@@ -59,9 +59,9 @@ export default function Nutrition() {
       user_id: user.id,
       food_name: formData.food_name,
       calories: parseInt(formData.calories),
-      protein: parseFloat(formData.protein) || 0,
-      carbs: parseFloat(formData.carbs) || 0,
-      fat: parseFloat(formData.fat) || 0
+      protein: formData.protein ? parseFloat(formData.protein) : 0,
+      carbs: formData.carbs ? parseFloat(formData.carbs) : 0,
+      fat: formData.fat ? parseFloat(formData.fat) : 0
     }
 
     const { error } = await supabase
@@ -80,9 +80,9 @@ export default function Nutrition() {
     const entryData = {
       food_name: formData.food_name,
       calories: parseInt(formData.calories),
-      protein: parseFloat(formData.protein) || 0,
-      carbs: parseFloat(formData.carbs) || 0,
-      fat: parseFloat(formData.fat) || 0
+      protein: formData.protein ? parseFloat(formData.protein) : 0,
+      carbs: formData.carbs ? parseFloat(formData.carbs) : 0,
+      fat: formData.fat ? parseFloat(formData.fat) : 0
     }
 
     const { error } = await supabase
@@ -116,11 +116,18 @@ export default function Nutrition() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
+    const data = {
+      food_name: formData.get('food_name'),
+      calories: formData.get('calories'),
+      protein: formData.get('protein'),
+      carbs: formData.get('carbs'),
+      fat: formData.get('fat')
+    }
     
     if (editingEntry) {
-      await updateFoodEntry(editingEntry.id, formData)
+      await updateFoodEntry(editingEntry.id, data)
     } else {
-      await addFoodEntry(formData)
+      await addFoodEntry(data)
     }
   }
 
